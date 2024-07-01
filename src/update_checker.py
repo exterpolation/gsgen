@@ -6,7 +6,7 @@ from colorama import Fore
 
 
 def get_current_version() -> float:
-    current_version = 1.0
+    current_version = 1.2
 
     return current_version
 
