@@ -28,7 +28,7 @@ def check_script_version() -> None:
             current_version = float(current_version)
 
             if latest_version == current_version:
-                print(f"{Fore.GREEN}[+] Current version is up to date.")
+                print(f"{Fore.GREEN}[+] Current version is up to date.\n")
             else:
                 print(f"{Fore.YELLOW}[!] New update found!")
                 download_url = "https://github.com/exterpolation/gsgen/releases/download/Release/GSGen.zip"

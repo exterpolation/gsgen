@@ -45,6 +45,12 @@ def get_user_input() -> str:
     return user_clantag
 
 
+def is_elevated_process() -> bool:
+    if os.getenv("PROCESS_ELEVATION_LEVEL") in ("High", "System"):
+        return True
+    return False
+
+
 def generate_clantag(user_clantag: str) -> list[str]:
     clantag = []
     length = len(user_clantag)
@@ -54,7 +60,7 @@ def generate_clantag(user_clantag: str) -> list[str]:
         clantag.append(f"{' ' * (length - i)}{user_clantag[:i]}")
 
     # Shifting spaces from left to right while removing characters
-    for i in range(1, length - 1):
+    for i in range(1, length):
         clantag.append(f"{user_clantag[i:]}{' ' * i}")
 
     return clantag
@@ -77,7 +83,7 @@ def write_to_file(clantag: list[str], file="clantag.txt") -> None:
 
 def main() -> int:
     os.system("cls") if os.name == "nt" else os.system("clear")
-    print(fr"""
+    print(fr"""{Fore.WHITE}
          ________  ________  ________  _______   ________      
         |\   ____\|\   ____\|\   ____\|\  ___ \ |\   ___  \    
         \ \  \___|\ \  \___|\ \  \___|\ \   __/|\ \  \\ \  \   
@@ -101,11 +107,26 @@ def main() -> int:
     user_clantag = get_user_input()
     clantag = generate_clantag(user_clantag)
 
-    user_path = input(f"{Fore.YELLOW}[?]Enter the path to save the clantag file (If the field is blank, "
-                      "clantag.txt will be generated in the same folder): ")
+    user_path = input(f"\n{Fore.YELLOW}[?]Enter the path to save the clantag file "
+                      f"and make sure to specify the .txt extension at the end.\n"
+                      f"  (If the field is blank, clantag.txt will be generated in the same folder): ")
 
     if user_path:
-        write_to_file(clantag, user_path)
+        if is_elevated_process():
+            write_to_file(clantag, user_path)
+        else:
+            print(f"{Fore.RED}[!]You need to run the program as an administrator to save the file in the specified path.")
+            user_input = input(f"{Fore.YELLOW}[?] Do you wish to stop the program? "
+                               f"If not, clantag.txt will be created in the same folder (Y/n): ").lower
+            if user_input == "y":
+                return 0
+            elif user_input == "n":
+                create_file()
+                write_to_file(clantag)
+                user_path = os.path.realpath("clantag.txt")
+            else:
+                print(f"{Fore.RED}[!]Invalid input. Exiting the program..")
+                return 0
     else:
         if not os.path.exists("clantag.txt"):
             create_file()
