@@ -30,6 +30,7 @@ Clantag example:
 """
 
 from update_checker import *
+import os
 
 source_url = "https://github.com/exterpolation/gsgen/"
 author = "Lexia"
