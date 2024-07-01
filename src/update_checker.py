@@ -24,6 +24,9 @@ def check_script_version() -> None:
             latest_version = response.text.strip()
 
             # Compare versions
+            latest_version = float(latest_version)
+            current_version = float(current_version)
+
             if latest_version == current_version:
                 print(f"{Fore.GREEN}[+] Current version is up to date.")
             else:
