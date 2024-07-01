@@ -31,8 +31,8 @@ def check_script_version() -> None:
                 download_url = "https://github.com/exterpolation/gsgen/releases/download/Stable/GSGen.exe"
 
                 print(f"{Fore.YELLOW}[!] Download the latest version from: {download_url}")
-                print(f"{Fore.YELLOW}[!]Opening the GitHub Page..")
-                time.sleep(2)
+                print(f"{Fore.YELLOW}[!] Opening the GitHub Page..")
+                time.sleep(1)
                 webbrowser.open(download_url)
                 time.sleep(3)
                 sys.exit()
