@@ -163,4 +163,5 @@ cython_debug/
 
 # Build files
 build.txt
+clantag.txt
 icon/

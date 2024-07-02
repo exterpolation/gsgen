@@ -115,17 +115,18 @@ def main() -> int:
         if is_elevated_process():
             write_to_file(clantag, user_path)
         else:
-            print(f"{Fore.RED}[!]You need to run the program as an administrator to save the file in the specified path.")
+            print(f"{Fore.RED}\n[!]You need to run the program as an administrator "
+                  f"to save the file in the specified path.")
             user_input = input(f"{Fore.YELLOW}[?] Do you wish to stop the program? "
-                               f"If not, clantag.txt will be created in the same folder (Y/n): ").lower
+                               f"If not, clantag.txt will be created in the same folder (Y/n):{Fore.WHITE} ").lower()
             if user_input == "y":
                 return 0
             elif user_input == "n":
-                create_file()
                 write_to_file(clantag)
                 user_path = os.path.realpath("clantag.txt")
             else:
                 print(f"{Fore.RED}[!]Invalid input. Exiting the program..")
+                time.sleep(2)
                 return 0
     else:
         if not os.path.exists("clantag.txt"):
